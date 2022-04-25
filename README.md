@@ -1,2 +1,2 @@
 ~~~~# ProcessSchedulingCalculator
-##A Deadlock Detector Using Bankers Algorithm
+A Deadlock Detector Using Bankers Algorithm
