@@ -214,24 +214,48 @@ function calculate(e) {
         return true;
         
     }
-    for(let i = 0; i < newnewAvailable.length; i++){
-        const tableRow = document.createElement('tr');
-        
-        for(let j = 0; j < noResource.value; j++){
-            const tableData = document.createElement('td');
-            tableData.innerText = `P${i+1} R${j+1}      ${newnewAvailable[i][j]}`;
-                        
-            tableRow.appendChild(tableData);
+
+    function safeState(complete){
+        for(let i = 0; i < complete.length; i++){
+            if(complete[i] === 0){
+                return false;
+            }
         }
-        safeTable.appendChild(tableRow);
-        
-        
-        
+        return true;
     }
 
-    console.log(newnewAvailable);
+    if (safeState(complete)) {
+        console.log('safe');
+        const ss = document.getElementById('Safe-State');
+        ss.innerText = 'The system is in Safe State';
+        for (let i = 0; i < safe.length; i++) {
+            ss.innerText += `P${safe[i]}, `;
+            
+        }
     
+        for(let i = 0; i < newnewAvailable.length; i++){
+            const tableRow = document.createElement('tr');
+            
+            for(let j = 0; j < noResource.value; j++){
+                const tableData = document.createElement('td');
+                tableData.innerText = `P${i+1} R${j+1}      ${newnewAvailable[i][j]}`;
+                            
+                tableRow.appendChild(tableData);
+            }
+            safeTable.appendChild(tableRow);
+            
+        }
+        console.log(safe);
+    
+        console.log(newnewAvailable);
+        
+    }
+    else{
+        const ss = document.getElementById('Safe-State');
+        ss.innerText = 'The system is  not in safe State';
 
+        console.log('not safe');
+    }
         
     
 }
