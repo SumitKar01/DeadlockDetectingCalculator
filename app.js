@@ -5,6 +5,7 @@ const processList = document.querySelector('.process-list');
 const resourceTable = document.querySelector('.resource-table');
 const maxTable = document.querySelector('.max-table');
 const needTable = document.querySelector('.need-table');
+const safeTable = document.querySelector('.safe-table');
 const availableTable = document.querySelector('.available-table');
 const calculateButton = document.querySelector('.calculate-btn');
 
@@ -103,9 +104,10 @@ function calculate(e) {
     let Max = new Array();
     let max = new Array();
     let Available = new Array();
-    let aval = new Array();
     let Need = new Array();
     let need = new Array();
+    const availableCopy = Available;
+    let newnewAvailable = new Array();
 
         for(let j = 0; j < noResource.value; j++){
             i = 0;
@@ -113,6 +115,7 @@ function calculate(e) {
         }
 
         console.log(Available);
+        newnewAvailable.push(availableCopy);
 
     
     
@@ -155,12 +158,10 @@ function calculate(e) {
     }
     console.log(complete);
 
-    let newAvailable = Available;
-    let newnewAvailable = new Array();
+    let newAvailable = Array.from(Available);
     let fAvailable = new Array();
-    newnewAvailable.push(Available);
     console.log(newAvailable);
-
+    
     for (let k = 0; k < noProcess.value; k++) {
         for (let i = 0; i < noProcess.value; i++) {
             if(complete[i]===0)
@@ -174,7 +175,7 @@ function calculate(e) {
                         newAvailable[j] = Max[i][j]  + newAvailable[j];
 
                         // console.log(newAvailable);
-                        fAvailable[j] = newAvailable[j];
+                        fAvailable.push (newAvailable[j]);
     
                         complete[i] = 1;
                     }
@@ -183,10 +184,19 @@ function calculate(e) {
                         console.log('fail');
                     }
                 }
-                newnewAvailable.push(fAvailable);
-                fAvailable = new Array();
-
+                if (IsTrue(Need, newAvailable, i)) {
+                    newnewAvailable.push(fAvailable);
+                    fAvailable = new Array();    
+                }
+                else
+                {
+                    fAvailable = new Array();
+                }
+                    
             }
+                
+
+            
         }
     }
     function IsTrue(Need,newAvailable, i) {
@@ -202,9 +212,23 @@ function calculate(e) {
         return true;
         
     }
-    
+    for(let i = 0; i < newnewAvailable.length; i++){
+        const tableRow = document.createElement('tr');
+        
+        for(let j = 0; j < noResource.value; j++){
+            const tableData = document.createElement('td');
+            tableData.innerText = `P${i+1} R${j+1}      ${newnewAvailable[i][j]}`;
+                        
+            tableRow.appendChild(tableData);
+        }
+        safeTable.appendChild(tableRow);
+        
+        
+        
+    }
 
     console.log(newnewAvailable);
+
         
     
 }
