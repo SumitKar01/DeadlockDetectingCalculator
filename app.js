@@ -108,6 +108,7 @@ function calculate(e) {
     let need = new Array();
     const availableCopy = Available;
     let newnewAvailable = new Array();
+    let safe = new Array();
 
         for(let j = 0; j < noResource.value; j++){
             i = 0;
@@ -186,7 +187,8 @@ function calculate(e) {
                 }
                 if (IsTrue(Need, newAvailable, i)) {
                     newnewAvailable.push(fAvailable);
-                    fAvailable = new Array();    
+                    fAvailable = new Array();
+                    safe.push(i);    
                 }
                 else
                 {
@@ -228,6 +230,7 @@ function calculate(e) {
     }
 
     console.log(newnewAvailable);
+    
 
         
     
